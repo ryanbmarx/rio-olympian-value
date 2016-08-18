@@ -6,8 +6,9 @@ module.exports = function(grunt) {
   // You'll also have to install them using a command similar to:
   //     npm install --save jquery
   var VENDOR_LIBRARIES = [
-    //'jquery',
-    //'underscore'
+    'jquery', 
+    'd3',
+    'lodash'
   ];
 
   config.browserify = {
@@ -20,6 +21,10 @@ module.exports = function(grunt) {
       src: ['js/src/app.js'],
       dest: 'js/app.min.js',
       options: {
+        browserifyOptions: {
+          standalone: 'TribScatterplot',
+          debug: true
+        },
         plugin: [
           [
             'minifyify', {
@@ -28,7 +33,6 @@ module.exports = function(grunt) {
             }
           ]
         ],
-        standalone: 'TribScatterplot',
         transform: [
           [
             'babelify', {
@@ -49,6 +53,9 @@ module.exports = function(grunt) {
       src: [],
       dest: 'js/vendor.min.js',
       options: {
+        browserifyOptions:{
+          debug:true
+        },
         plugin: [
           [
             'minifyify', {
@@ -77,7 +84,7 @@ module.exports = function(grunt) {
   config.watch = {
     sass: {
       files: ['sass/**/*.scss'],
-      tasks: ['sass']
+      tasks: ['sass', 'postcss']
     },
     js: {
       files: ['js/src/**/*.js'],
@@ -85,8 +92,23 @@ module.exports = function(grunt) {
     }
   };
 
-  grunt.initConfig(config);
+  config.postcss = {
+    options:{
+      map:{
+        inline:false,
+        annotation:'css'
+      },
+      processors:[
+        require('autoprefixer')({browsers: 'last 4 versions'})
+      ]
+    },
+    dist:{
+      src: 'css/**/*.css'
+    }
+  }
 
+  grunt.initConfig(config);
+  grunt.loadNpmTasks('grunt-postcss');
   grunt.loadNpmTasks('grunt-sass');
   grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-watch');
@@ -95,6 +117,7 @@ module.exports = function(grunt) {
 
   defaultTasks.push('sass');
   defaultTasks.push('browserify');
+  defaultTasks.push('postcss');
 
   grunt.registerTask('default', defaultTasks);
 };
