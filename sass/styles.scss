@@ -187,14 +187,14 @@ $axis_label_width:100px;
 	}
 }
 
-.rule{
+%rule{
 	background-color: #eee;
 	position:absolute;
 	z-index:2;
 }
 
 .rule--x{
-	@extend .rule;
+	@extend %rule;
 	height:1px;
 	left:0;
 	width:100%;
@@ -213,7 +213,7 @@ $axis_label_width:100px;
 }
 
 .rule--y{
-	@extend .rule;
+	@extend %rule;
 	width:1px;
 	top:0;
 	height:100%;
