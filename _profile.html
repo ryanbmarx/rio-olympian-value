@@ -1,6 +1,7 @@
 <div id="{{ profile.id }}" class="profile">
-	<img src='http://{{ ROOT_URL }}/img/full/{{ profile.img }}' class="profile__pic">
-	<h3 class='profile__name'>{{profile.athlete}}</h3>
+	<img src='http://{{ ROOT_URL }}/img/display/{{ profile.img }}' class="profile__pic">
+	<h3 class='profile__name'>{{ profile.athlete_first }} {{ profile.athlete_last }}</h3>
+	<p class='profile__sport'>{{ profile.sport }}</p>
 	<div class="profile__chart"></div>
 	<div class="profile__graf">
 		<ul class='profile_meta'>

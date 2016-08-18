@@ -19,12 +19,12 @@
 
 {% block library_scripts %}
 {# Uncomment this if you are using libraries such as jQuery #}
-{# <script src="//{{ ROOT_URL }}/js/vendor.min.js"></script> #}
+<script src="//{{ ROOT_URL }}/js/vendor.min.js"></script>
 {% endblock %}
 
 {% block scripts %}
 {# Uncomment this if you are using custom JavaScript #}
-{# <script src="//{{ ROOT_URL }}/js/app.min.js"></script> #}
+<script src="//{{ ROOT_URL }}/js/app.min.js"></script>
 
 <script>
 (function(document) {
@@ -42,34 +42,33 @@
   var rioData = [
 		{% for athlete in profiles %}
 			{	
-				id:"{{ burger.id }}",
-				chain:"{{ burger.chain|e|process_text }}",
-				name:"{{ burger.name }}",
-				score:"{{ burger.score }}",
-				fancyRank:"{{ burger.fancy_rank }}",
-				img:"http://{{ROOT_URL}}/img/full/{{ burger.img }}",
-				imgCutout:"http://{{ROOT_URL}}/img/cutouts/{{ burger.img_cutout }}"
+				id:"{{ athlete.id }}",
+				name:"{{ athlete.athlete }}",
+				yAxis:"{{ athlete.rio_performance }}",
+				xAxis:"{{ athlete.earning_potential }}",
+				imgDisplay:"http://{{ROOT_URL}}/img/display/{{ athlete.img }}",
+				imgPlot:"http://{{ROOT_URL}}/img/plot/{{ athlete.img }}"
 			}{% if not loop.last %},{% endif %}
 		{% endfor %}
 	];
 
 	var olympicScatterplot = new TribScatterplot.TribScatterplot({
-		mobileBreakpoint: 700px,
+		mobileBreakpoint: 700,
 		data:rioData,
-		desktopChartContainer:document.getElementById('rio-scatterplot'),
-		mobileChartContainer:document.getElementsByClassName('profile__chart'),
+		desktopChartContainer:'#rio-scatterplot',
+		mobileChartContainer:'.profile__chart',
 		yAxisLabels: {
-			top:"",
-			bottom:"",
+			top:"{{ y_axis_label_top }}",
+			bottom:"{{ y_axis_label_bottom }}",
 			mobile:"{{ y_mobile_label }}"
 		},
 		xAxisLabels: {
-			left:"",
-			right:"",
+			left:"{{ x_axis_label_left }}",
+			right:"{{ x_axis_label_right }}",
 			mobile:"{{ x_mobile_label }}"
 		},
-		yAxisColumn: {{ y_axis_column }},
-		xAxisColumn: {{ x_axis_column }}
+		yAxisColumn: "{{ y_axis_column }}",
+		xAxisColumn: "{{ x_axis_column }}"
 	});
 })(document);    
 </script>
