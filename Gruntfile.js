@@ -28,6 +28,7 @@ module.exports = function(grunt) {
             }
           ]
         ],
+        standalone: 'TribScatterplot',
         transform: [
           [
             'babelify', {

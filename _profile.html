@@ -1,0 +1,12 @@
+<div id="{{ profile.id }}" class="profile">
+	<img src='http://{{ ROOT_URL }}/img/full/{{ profile.img }}' class="profile__pic">
+	<h3 class='profile__name'>{{profile.athlete}}</h3>
+	<div class="profile__chart"></div>
+	<div class="profile__graf">
+		<ul class='profile_meta'>
+			<li>Rio performance: {{ profile.rio_performance }}</li>
+			<li>Earnings potential: {{ profile.earning_potential }}</li>
+		</ul>
+		{{ profile.blurb|markdown }}
+	</div>
+</div>

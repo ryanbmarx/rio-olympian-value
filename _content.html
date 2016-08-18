@@ -1,0 +1,76 @@
+{# Override the `container` block to disable default layout. #}
+{% block container %}
+{% block content %}
+{{intro|markdown}}
+
+<h2 class="grid_title">{{ grid_title }}</h2>
+<p class="instructions">{{ instructions }}</p>
+<div class="profiles">
+	{% for profile in profiles|sort(attribute="earning_potential", reverse=true) %}
+		{% include "_profile.html" %}
+	{% endfor %}
+	<p class='sources'>{{sources}}</p>
+</div>
+	<div id='chart--large' class=""></div>
+
+
+{% endblock content %}
+{% endblock container %}
+
+{% block library_scripts %}
+{# Uncomment this if you are using libraries such as jQuery #}
+{# <script src="//{{ ROOT_URL }}/js/vendor.min.js"></script> #}
+{% endblock %}
+
+{% block scripts %}
+{# Uncomment this if you are using custom JavaScript #}
+{# <script src="//{{ ROOT_URL }}/js/app.min.js"></script> #}
+
+<script>
+(function(document) {
+  var CSS = [
+    "//{{ ROOT_URL }}/css/styles.css"
+  ];    
+  CSS.forEach(function(url) {
+    var link = document.createElement('link');
+    link.setAttribute('rel', 'stylesheet');
+    link.setAttribute('href', url);
+    document.head.appendChild(link);
+  });
+
+
+  var rioData = [
+		{% for athlete in profiles %}
+			{	
+				id:"{{ burger.id }}",
+				chain:"{{ burger.chain|e|process_text }}",
+				name:"{{ burger.name }}",
+				score:"{{ burger.score }}",
+				fancyRank:"{{ burger.fancy_rank }}",
+				img:"http://{{ROOT_URL}}/img/full/{{ burger.img }}",
+				imgCutout:"http://{{ROOT_URL}}/img/cutouts/{{ burger.img_cutout }}"
+			}{% if not loop.last %},{% endif %}
+		{% endfor %}
+	];
+
+	var olympicScatterplot = new TribScatterplot.TribScatterplot({
+		mobileBreakpoint: 700px,
+		data:rioData,
+		desktopChartContainer:document.getElementById('rio-scatterplot'),
+		mobileChartContainer:document.getElementsByClassName('profile__chart'),
+		yAxisLabels: {
+			top:"",
+			bottom:"",
+			mobile:"{{ y_mobile_label }}"
+		},
+		xAxisLabels: {
+			left:"",
+			right:"",
+			mobile:"{{ x_mobile_label }}"
+		},
+		yAxisColumn: {{ y_axis_column }},
+		xAxisColumn: {{ x_axis_column }}
+	});
+})(document);    
+</script>
+{% endblock scripts %}
