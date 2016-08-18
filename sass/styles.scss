@@ -50,6 +50,19 @@ $axis_label_width:100px;
 }
 }
 
+@mixin resize_profiles_and_charts($profiles_width){
+	.profiles{
+		max-width: $profiles_width;
+	}
+
+	.chart--large {
+		margin-left:$profiles_width + 20px;
+		height:0;
+		padding-bottom:100%;
+		position:relative;		
+	}
+}
+
 @mixin clearfix(){
 	&:before{
 		content:" ";
@@ -75,7 +88,6 @@ $axis_label_width:100px;
 }
 
 
-// MOBILE PROFILES AND 
 .grid_title{
 	@include sans-serif-text(24px);
 	margin-bottom:5px;
@@ -83,10 +95,8 @@ $axis_label_width:100px;
 	text-transform:uppercase;
 }
 
-.burgers .sources{
-	@include sans-serif-text(12px);
-	font-style: italic;
-}
+
+// MOBILE PROFILES AND 
 
 .profile{
 	@include clearfix();
@@ -177,14 +187,14 @@ $axis_label_width:100px;
 	}
 }
 
-.rule{
+%rule{
 	background-color: #eee;
 	position:absolute;
 	z-index:2;
 }
 
 .rule--x{
-	@extend .rule;
+	@extend %rule;
 	height:1px;
 	left:0;
 	width:100%;
@@ -203,7 +213,7 @@ $axis_label_width:100px;
 }
 
 .rule--y{
-	@extend .rule;
+	@extend %rule;
 	width:1px;
 	top:0;
 	height:100%;
@@ -245,6 +255,8 @@ $axis_label_width:100px;
 
 
 @media (min-width:700px){
+	@include resize_profiles_and_charts(220px);
+	
 	p.instructions{
 		display:block;
 		@include sans-serif-text(14px);
@@ -253,23 +265,20 @@ $axis_label_width:100px;
 		margin-top:0px;
 	}
 
-	.big-burger-wrapper{
-		display:block;
-		margin-left:240px;
-		height:0;
-		padding-bottom:100%;
-		position:relative		
+	.profiles{
+		float:left;
 	}
-	#burger-chart--large{
+
+	.chart--large{
+		display:block;
+	}
+	.XXXX{
 		width: 100%;
 		height: 0;
 		padding-bottom: 100%;
 	}
 
-	.burgers{
-		max-width: 220px;
-		float:left;
-	}
+
 
 	.burger{
 		display:none;
@@ -297,18 +306,10 @@ $axis_label_width:100px;
 	}
 }
 
+
+
 @media (min-width:900px){
-	.big-burger-wrapper{
-		margin-left:340px;
-	}
-
-	.profiles{
-		max-width: 320px;
-	}
-
-	.profile__score{
-		width: 45%;	
-	}
+	@include resize_profiles_and_charts(320px);
 
 	.profile__plot{
 		@include size_profile_plot(50px)

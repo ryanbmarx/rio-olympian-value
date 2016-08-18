@@ -36,13 +36,13 @@ class TribScatterplot{
 
 		// Debounce!!!
 		d3.select(window).on('resize',debounce(function(){
-			drawCharts();
+			app.drawCharts();
 		}, 300));
 
 		app.drawCharts();
 
 		if ($(window).width() > app.options.mobileBreakpoint){
-			app.hideShowProfileByIndex('usain-bolt');
+			app.hideShowProfileByIndex(`profile${app.options.indexOfProfileToShowFirst}`);
 		}
 		
 
@@ -57,125 +57,125 @@ class TribScatterplot{
 		d3.select('#' + profile).classed('active', true);
 	}
 
-	// drawBigChart(){
+	drawBigChart(){
 
-	// 	// This is the DESKTOP/TABLET version. The mobile layout uses a small-multiple technique
+		// This is the DESKTOP/TABLET version. The mobile layout uses a small-multiple technique
+		console.log('This is a big chart!');
 
-	// 	var chartContainer = d3.select('#profile-chart--large');
+		var app = this;
+
+		var chartContainer = d3.select(app.options.desktopContainer);
 		
-	// 	// Start with a clean slate for debounced redraw
-	// 	chartContainer.selectAll('*').remove();
-
-	// 	var data = profileData;
+		// Start with a clean slate for debounced redraw
+		chartContainer.selectAll('*').remove();
 		
-	// 	var margin = { top:'15px', right:'15px', bottom:'15px', left:'15px'},
-	// 		height = chartContainer.node().offsetHeight,
-	// 		width = chartContainer.node().offsetWidth;
+		var margin = { top:'15px', right:'15px', bottom:'15px', left:'15px'},
+			height = chartContainer.node().offsetWidth,
+			width = height;
 
-	// 	var scatterPlot = chartContainer
-	// 		.append('div')
-	// 		.classed('scatterPlotInner', true)
-	// 		.style('position', 'relative')
-	// 		.style('border', '1px solid black')
-	// 		.style('height', height + 'px')
-	// 		.style('width', width)
-	// 		.style('margin', margin.top);
+		var scatterPlot = chartContainer
+			.append('div')
+				.classed('scatterPlotInner', true)
+				.style('position', 'relative')
+				.style('border', '1px solid black')
+				.style('height', height + 'px')
+				.style('width', width)
+				.style('margin', margin.top);
 
 
-	// 	// This is the fancy ranking
-	// 	var x = d3.scaleLinear()
-	// 		.domain([0,10])
-	// 		.range([0,100]);
+		// This is the fancy ranking
+		var x = d3.scaleLinear()
+			.domain([0,10])
+			.range([0,100]);
 
-	// 	// This is the overall score/result
-	// 	var y = d3.scaleLinear()
-	// 		.domain([0,10])
-	// 		.range([100,0]);
+		// This is the overall score/result
+		var y = d3.scaleLinear()
+			.domain([0,10])
+			.range([100,0]);
 
-	// 	// Draw the grid lines, both x and y.
-	// 	for (var i = 0.25; i < 10; i+=.25){
+		// Draw the grid lines, both x and y.
+		for (var i = 0.25; i < 10; i+=.25){
 			
-	// 		let isBaseline = i == 5 ? true : false;
-	// 		let isInteger = false;
+			let isBaseline = i == 5 ? true : false;
+			let isInteger = false;
 			
-	// 		if(!isBaseline && Number.isInteger(i)) {
-	// 			isInteger = true;
-	// 		}
+			if(!isBaseline && Number.isInteger(i)) {
+				isInteger = true;
+			}
 		
-	// 		d3.select('.scatterPlotInner')
-	// 			.append('div')
-	// 			.classed('rule--horiz', true)
-	// 			.classed('rule--baseline', isBaseline)
-	// 			.classed('rule--midweight', isInteger)
-	// 			.style('top', `${y(i)}%`)
-	// 			.style('left', `0`);
+			d3.select('.scatterPlotInner')
+				.append('div')
+				.classed('rule--x', true)
+				.classed('rule--baseline', isBaseline)
+				.classed('rule--midweight', isInteger)
+				.style('top', `${y(i)}%`)
+				.style('left', `0`);
 
-	// 		d3.select('.scatterPlotInner')
-	// 			.append('div')
-	// 			.classed('rule--vert', true)
-	// 			.classed('rule--baseline', isBaseline)
-	// 			.classed('rule--midweight', isInteger)
-	// 			.style('top', `0`)
-	// 			.style('left', `${x(i)}%`);
-	// 	}
+			d3.select('.scatterPlotInner')
+				.append('div')
+				.classed('rule--y', true)
+				.classed('rule--baseline', isBaseline)
+				.classed('rule--midweight', isInteger)
+				.style('top', `0`)
+				.style('left', `${x(i)}%`);
+		}
 
-	// 	// Add the four axis labels
-	// 	d3.select('.scatterPlotInner')
-	// 		.append('small')
-	// 		.classed('axis-label', true)
-	// 		.style('top', `${x(5)}%`)
-	// 		.style('right', '0')
-	// 		.html('More fancy');
+		// Add the four axis labels
+		d3.select('.scatterPlotInner')
+			.append('small')
+			.classed('axis-label', true)
+			.style('top', `${x(5)}%`)
+			.style('right', '0')
+			.html(app.options.xAxisLabels.right);
 
-	// 	d3.select('.scatterPlotInner')
-	// 		.append('small')
-	// 		.classed('axis-label', true)
-	// 		.style('top', `${x(5)}%`)
-	// 		.style('left', '0')
-	// 		.html('Less fancy');
+		d3.select('.scatterPlotInner')
+			.append('small')
+			.classed('axis-label', true)
+			.style('top', `${x(5)}%`)
+			.style('left', '0')
+			.html(app.options.xAxisLabels.left);
 		
-	// 	d3.select('.scatterPlotInner')
-	// 		.append('small')
-	// 		.classed('axis-label', true)
-	// 		.classed('axis-label--y', true)
-	// 		.style('left', `${y(5)}%`)
-	// 		.style('top', '0')
-	// 		.html('Better');
+		d3.select('.scatterPlotInner')
+			.append('small')
+			.classed('axis-label', true)
+			.classed('axis-label--y', true)
+			.style('left', `${y(5)}%`)
+			.style('top', '0')
+			.html(app.options.yAxisLabels.top);
 
-	// 	d3.select('.scatterPlotInner')
-	// 		.append('small')
-	// 		.classed('axis-label', true)
-	// 		.classed('axis-label--y', true)
-	// 		.style('left', `${y(5)}%`)
-	// 		.style('bottom', '0')
-	// 		.html('Worse');
+		d3.select('.scatterPlotInner')
+			.append('small')
+			.classed('axis-label', true)
+			.classed('axis-label--y', true)
+			.style('left', `${y(5)}%`)
+			.style('bottom', '0')
+			.html(app.options.yAxisLabels.bottom);
 
-	// 	scatterPlot.selectAll('.profile__plot')
-	// 			.data(profileData)
-	// 		.enter()
-	// 			.append('div')
-	// 			.classed('profile__plot', true)
-	// 			.style('left', d => `${x(d.fancyRank)}%`)
-	// 			.style('top', d => `${y(d.score)}%`)
-	// 			.attr('data-profile', d => {
-	// 				return d.id;
-	// 			})
-	// 			.attr('data-tooltip', d=> d.chain.replace("&#39;","'"))
-	// 			.style('background-image', d => `url(${d.imgCutout})`)
-	// 			.on('click', function(){
-	// 				var profileToShow = d3.select(this).attr('data-profile');
-	// 				hideShowBurgerByIndex(profileToShow, profileToShow);
-	// 			});
-	// }
+		scatterPlot.selectAll('.profile__plot')
+				.data(app.data)
+			.enter()
+				.append('div')
+				.classed('profile__plot', true)
+				.style('left', d => `${x(d.xAxis)}%`)
+				.style('top', d => `${y(d.yAxis)}%`)
+				.attr('data-profile', d => {
+					return d.id;
+				})
+				.attr('data-tooltip', d => d.name)
+				.style('background-image', d => `url(${d.imgPlot})`)
+				.on('click', function(){
+					var profileToShow = d3.select(this).attr('data-profile');
+					hideShowProfileByIndex(profileToShow, profileToShow);
+				});
+	}
 
 	drawSmallCharts(){
 		console.log('These charts are small!')
 		var app = this;
 
-
 		// These are the mobile charts. Each div gets an identical chart 
 		// and css is used to make the highlghted item
-		var chartContainer = d3.selectAll(app.options.mobileChartContainer);
+		var chartContainer = d3.selectAll(app.options.mobileContainer);
 		
 		// Start with a clean slate
 		chartContainer.selectAll('*').remove();
@@ -225,7 +225,7 @@ class TribScatterplot{
 		
 		// Add the axis labels
 		// TODO: Fine tune placement and how I use JS + SASS to do the positioning
-		d3.selectAll(app.options.mobileChartContainer)
+		d3.selectAll(app.options.mobileContainer)
 			.append('small')
 			.classed('axis-label', true)
 			.style('top', `0`)
@@ -234,7 +234,7 @@ class TribScatterplot{
 			// .style('right', '0')
 			.html(`&#9664; ${app.options.xAxisLabels.mobile} &#9654;`);
 		
-		d3.selectAll(app.options.mobileChartContainer)
+		d3.selectAll(app.options.mobileContainer)
 			.append('small')
 			.classed('axis-label', true)
 			.classed('axis-label--y', true)
@@ -264,7 +264,7 @@ class TribScatterplot{
 		var app = this;
 		// This is the function being debounced
 		if ($(window).width() > app.options.mobileBreakpoint){
-			// drawBigChart();
+			app.drawBigChart();
 		} else {
 			app.drawSmallCharts();
 		}
