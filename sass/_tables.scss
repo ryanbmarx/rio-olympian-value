@@ -1,0 +1,84 @@
+	//IMPORT THIS AFTER TYPOGRAPHY
+	// TABLES
+	table{
+	// BEGIN WITH STANDARD TABLE STYLES
+	width:100%;
+	margin:15px 0;
+	border-collapse:collapse;
+	thead {
+		tr,.tableizer-firstrow{
+			background-color:$trib_dark_blue;
+		}
+	}
+	tbody{
+		tr{vertical-align:top
+			&:first-child td{
+				padding-top:12px;
+			}
+		}
+	}
+	td, th{
+		@include sans-serif-text();
+	}
+	td{
+		padding:7px
+	}
+	th{
+		padding:10px;
+		border-right:1px solid #fff;
+		text-align:left;
+		color:#fff;
+	}
+	tr{
+		&:last-child{
+			border-bottom:2px solid $trib_dark_blue;
+			td{
+				padding-top:10px;
+				padding-bottom:10px
+			}
+		}
+	}
+	// ADD CLASS "ZEBRA" to stripe alternating lines
+	&.zebra {
+		td{padding:10px 7px}
+		tbody {
+			tr:nth-child(even){
+				background:$trib_light_blue;
+			}	
+		}
+	}
+	
+	// USE CLASS "COMPRESSED" FOR SMALLER TABLES, SUCH AS SPORTS STATLINES
+	&.compressed{
+		td, th{
+			font-size: 12px;
+		}
+		&.zebra td, td{
+			padding:5px;
+		}
+		thead tr, .tableizer-firstrow {
+			background-color: transparent;
+			border-bottom: 2px solid black;
+			padding-bottom: 5px;
+		}
+		tr:last-child td {
+			padding-top: 7px;
+			padding-bottom: 7px;
+		}
+		th {
+			border-right: none;
+			padding: 0px 6px 3px 6px;
+			color: #000;
+		}
+		tbody tr:first-child td {
+			padding-top: 7px;
+		}
+		tbody tr:last-child {
+	border-bottom:none;
+		}
+		tr {
+			line-height: 1em;
+			border-bottom: 1px solid #ccc;
+		}
+	}
+}

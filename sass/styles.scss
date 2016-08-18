@@ -1,0 +1,317 @@
+// VARIABLES
+@import 'colors';
+
+// The square-size of the mobile chart
+$mobile_chart_width:150px;
+
+// How big are the burgers on desktop?
+$pointer_dimension:35px;
+
+// How big are the burgers on mobile?
+$pointer_mobile_dimension:10px;
+
+// What color is the highlighted circle on mobile charts?
+$profile_plot_highlight_color: $trib_red1;
+
+// What color are the rest of the circles on mobile charts?
+$burger_plot_color: #ccc;
+
+// Axis label config
+$axis_label_height:20px;
+$axis_label_width:100px;
+// MIXINS
+
+@mixin size_profile_plot($size, $addHover:true){
+	
+	$big_size: $size * 2;
+
+	height:$size;
+	width:$size;
+	margin-left: $size / 2 * -1;
+	margin-top: $size / 2 * -1;
+
+	transition: all 150ms;
+	
+	@if $addHover{
+
+	&:hover, &.active{
+		height:$big_size;
+		width:$big_size;
+		margin-left: $big_size / 2 * -1;
+		margin-top: $big_size / 2 * -1;
+
+		border:2px dashed $profile_plot_highlight_color;
+		transition: all 150ms;
+		border-radius: 50%;
+		background-size: 80%;
+
+		z-index:10;
+	}
+}
+}
+
+@mixin clearfix(){
+	&:before{
+		content:" ";
+		display:table
+	}
+	&:after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+
+
+
+@import 'typography';
+@import 'tables';
+@import 'tooltip';
+
+
+// HIDE THESE THINGS ON DESKTOP
+.instructions, .chart--large{
+	display:none;
+}
+
+
+// MOBILE PROFILES AND 
+.grid_title{
+	@include sans-serif-text(24px);
+	margin-bottom:5px;
+	text-align:center;
+	text-transform:uppercase;
+}
+
+.burgers .sources{
+	@include sans-serif-text(12px);
+	font-style: italic;
+}
+
+.profile{
+	@include clearfix();
+	border-bottom:1px solid black;
+	margin-bottom:30px;
+	padding-bottom:30px;
+
+	&__pic{
+		width:100%;
+	}
+	
+	&__name{
+		@include sans-serif-text(18px);
+		font-style:italic;
+		margin-top:0px;
+	}
+
+	&__graf{
+		margin:0 0 0 ($mobile_chart_width + 20px);
+		p{
+			margin:0;
+		}
+	}
+
+	&__scorebox{
+		display: flex;
+		width: 100%;
+		justify-content: space-between;
+		flex-wrap:wrap
+	}
+
+	&__score{
+		text-align: center;
+		background-color:#e6e6e6;
+		border: 1px solid #999;
+		padding: 5px;
+		margin-bottom: 10px;
+		width: 100%;	
+
+		p{
+			@include sans-serif-text(14px);
+		}	
+	}
+
+	&__chart{
+		position:relative;
+		float:left;
+		width:$mobile_chart_width;
+		height:$mobile_chart_width;
+		.profile__plot{
+			@include size_profile_plot($pointer_mobile_dimension, false);
+			background-color:$burger_plot_color;
+			border-radius:50%;
+			cursor:default;
+		}
+
+		.axis-label{
+			@include sans-serif-text(10px)
+			padding:0;
+			font-weight: normal;
+			color:black;
+			background-color:transparent;
+			display:inline;
+			text-align:center;
+		}
+	}
+}
+
+// This is a dot on the scatter which uses a background image
+.profile__plot--with-img{
+	position:absolute;
+	top:0;
+	left:0;
+	background-size:95%;
+	background-position: center center;
+	background-repeat:no-repeat;
+	z-index:6;
+	cursor:pointer;
+}
+
+// This loop outputs the css selectors needed to make the proper profile dot highlighted in each profile.
+@for $i from 1 through 30{
+	#profile#{$i} div[data-profile='profile#{$i}']{
+		// These styles are for the highlighted dot in the mobile plots
+		@include size_profile_plot($pointer_mobile_dimension + 10px, false);
+		background-color:$profile_plot_highlight_color;
+		z-index:1000;
+	}
+}
+
+.rule{
+	background-color: #eee;
+	position:absolute;
+	z-index:2;
+}
+
+.rule--x{
+	@extend .rule;
+	height:1px;
+	left:0;
+	width:100%;
+
+	&.rule--midweight{
+		height:2px;
+	}
+	
+	&.rule--baseline{
+		height:4px;
+		margin-top:-2px;
+		background-color:#aaa;
+		z-index:3;
+	}
+
+}
+
+.rule--y{
+	@extend .rule;
+	width:1px;
+	top:0;
+	height:100%;
+
+	&.rule--midweight{
+		width:2px;
+	}
+
+	&.rule--baseline{
+		width:4px;
+		margin-left:-2px;
+		background-color:#aaa;
+		z-index:3;
+	}
+
+}
+
+.axis-label{
+	@include sans-serif-text(12px);
+	text-transform: uppercase;
+	position: absolute;
+	color: white;
+	font-weight: bold;
+	background: #aaa;
+	height: $axis_label_height;
+	width: $axis_label_width;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: (-.5 * $axis_label_height) 0 0 0;
+	z-index:5;
+
+	&--y{
+		margin: 0 0 0 (-0.5 * $axis_label_width);
+	}
+
+}
+
+
+
+@media (min-width:700px){
+	p.instructions{
+		display:block;
+		@include sans-serif-text(14px);
+		text-align: center;
+		font-style: italic;
+		margin-top:0px;
+	}
+
+	.big-burger-wrapper{
+		display:block;
+		margin-left:240px;
+		height:0;
+		padding-bottom:100%;
+		position:relative		
+	}
+	#burger-chart--large{
+		width: 100%;
+		height: 0;
+		padding-bottom: 100%;
+	}
+
+	.burgers{
+		max-width: 220px;
+		float:left;
+	}
+
+	.burger{
+		display:none;
+		border-bottom:0;
+		margin-bottom:0;
+		padding-bottom:0;
+		transition:all 150ms;
+
+		&.active{
+			display:block;
+		}
+
+	}
+
+	.profile__chart {
+		display:none;
+	}
+	
+	.profile__graf {
+		margin-left:0
+	}
+
+	.profile__plot{
+		@include size_profile_plot(40px);
+	}
+}
+
+@media (min-width:900px){
+	.big-burger-wrapper{
+		margin-left:340px;
+	}
+
+	.profiles{
+		max-width: 320px;
+	}
+
+	.profile__score{
+		width: 45%;	
+	}
+
+	.profile__plot{
+		@include size_profile_plot(50px)
+	}
+}
+

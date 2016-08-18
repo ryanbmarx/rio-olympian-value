@@ -1,0 +1,44 @@
+@mixin sans-serif-text($size:14px){
+	font-family: "Arial", sans-serif;
+	line-height:1.3em;
+	font-size:$size;
+}
+
+@mixin serif-text($size:14px){
+	font-family: "Georgia", serif;
+	line-height:1.3em;
+	font-size:$size;
+}
+
+@mixin buttons_container(){
+	display:flex;
+	flex-wrap:wrap;
+	justify-content:space-between;
+	margin:25px auto;
+
+}
+
+@mixin button(){
+	@include sans-serif-text(10px);
+	color:black;
+	display: block;
+	margin: 10px 0;
+	padding:15px 0;
+	background-color:#eee;
+	text-align: center; 
+	cursor:pointer;
+	color:black;
+	transition:all 150ms;
+
+	&.active, &.active:hover{
+		background-color:$highlight_color;
+		font-weight: bold;
+		color:white;
+		transition:all 150ms;
+	}
+
+	&:hover{
+		opacity: .8;
+		color:black;
+	}
+}
