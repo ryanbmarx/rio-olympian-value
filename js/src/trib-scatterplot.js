@@ -7,13 +7,11 @@ function isThereAPlotImage(d){
 		// Takes a data element. Tests if it is defined. 
 		// If it is, then return true. 
 		// Otherwise return false.
-		console.log(typeof(d) == 'undefined');
 		 return typeof(d) !== 'undefined';
 }
 
 class TribScatterplot{
 	constructor(options){
-		console.log('Making some charts!')
 		var app = this;
 		app.options = options;
 		app.data = options.data;
@@ -44,7 +42,6 @@ class TribScatterplot{
 	drawBigChart(){
 
 		// This is the DESKTOP/TABLET version. The mobile layout uses a small-multiple technique
-		console.log('This is a big chart!');
 
 		var app = this;
 
@@ -56,7 +53,6 @@ class TribScatterplot{
 		var margin = { top:'15px', right:'15px', bottom:'15px', left:'15px'},
 			height = d3.select(app.options.desktopContainer).node().offsetWidth,
 			width = height;
-			console.log(height);
 		var scatterPlot = chartContainer
 			.append('div')
 				.classed('scatterPlotInner', true)
@@ -149,13 +145,11 @@ class TribScatterplot{
 				.style('background-image', d => `url('${d.imgPlot}')`)
 				.on('click', function(){
 					var profileToShow = d3.select(this).attr('data-profile');
-					console.log(profileToShow);
 					app.hideShowProfileByIndex(profileToShow);
 				});
 	}
 
 	drawSmallCharts(){
-		console.log('These charts are small!')
 		var app = this;
 
 		// These are the mobile charts. Each div gets an identical chart 
