@@ -3,36 +3,13 @@ var $ = require('jquery');
 var d3 = require('d3');
 var debounce = require('lodash/debounce');
 
-/*
-
-	var olympicScatterplot = new TribScatterplot.TribScatterplot({
-		mobileBreakpoint: 700px,
-		data:rioData,
-		desktopChartContainer:document.getElementById('rio-scatterplot'),
-		mobileChartContainer:document.getElementsByClassName('profile__chart'),
-		yAxisLabels: {
-			top:"",
-			bottom:"",
-			mobile:"{{ y_mobile_label }}"
-		},
-		xAxisLabels: {
-			left:"",
-			right:"",
-			mobile:"{{ x_mobile_label }}"
-		},
-		yAxisColumn: {{ y_axis_column }},
-		xAxisColumn: {{ x_axis_column }}
-	});
-
-*/
-
-	function isThereAPlotImage(d){
-			// Takes a data element. Tests if it is defined. 
-			// If it is, then return true. 
-			// Otherwise return false.
-			console.log(typeof(d) == 'undefined');
-			 return typeof(d) !== 'undefined';
-	}
+function isThereAPlotImage(d){
+		// Takes a data element. Tests if it is defined. 
+		// If it is, then return true. 
+		// Otherwise return false.
+		console.log(typeof(d) == 'undefined');
+		 return typeof(d) !== 'undefined';
+}
 
 class TribScatterplot{
 	constructor(options){
@@ -77,9 +54,9 @@ class TribScatterplot{
 		chartContainer.selectAll('*').remove();
 		
 		var margin = { top:'15px', right:'15px', bottom:'15px', left:'15px'},
-			height = chartContainer.node().offsetWidth,
+			height = d3.select(app.options.desktopContainer).node().offsetWidth,
 			width = height;
-
+			console.log(height);
 		var scatterPlot = chartContainer
 			.append('div')
 				.classed('scatterPlotInner', true)
@@ -172,7 +149,8 @@ class TribScatterplot{
 				.style('background-image', d => `url('${d.imgPlot}')`)
 				.on('click', function(){
 					var profileToShow = d3.select(this).attr('data-profile');
-					hideShowProfileByIndex(profileToShow, profileToShow);
+					console.log(profileToShow);
+					app.hideShowProfileByIndex(profileToShow);
 				});
 	}
 

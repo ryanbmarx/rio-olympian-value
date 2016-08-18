@@ -11,7 +11,9 @@
 	{% endfor %}
 	<p class='sources'>{{sources}}</p>
 </div>
-	<div id='chart--large' class=""></div>
+<div class='chart-wrapper-large'>
+	<div id='rio-scatterplot' class="chart--large"></div>
+</div>
 
 
 {% endblock content %}
@@ -43,11 +45,12 @@
 		{% for athlete in profiles %}
 			{	
 				id:"{{ athlete.id }}",
-				name:"{{ athlete.athlete }}",
+				name:"{{ athlete.athlete_first }} {{ athlete.athlete_last }} ",
 				yAxis:"{{ athlete.rio_performance }}",
 				xAxis:"{{ athlete.earning_potential }}",
 				imgDisplay:"http://{{ROOT_URL}}/img/display/{{ athlete.img }}",
 				imgPlot:"http://{{ROOT_URL}}/img/plot/{{ athlete.img }}"
+
 			}{% if not loop.last %},{% endif %}
 		{% endfor %}
 	];
@@ -55,8 +58,8 @@
 	var olympicScatterplot = new TribScatterplot.TribScatterplot({
 		mobileBreakpoint: 700,
 		data:rioData,
-		desktopChartContainer:'#rio-scatterplot',
-		mobileChartContainer:'.profile__chart',
+		desktopContainer:'#rio-scatterplot',
+		mobileContainer:'.profile__chart',
 		yAxisLabels: {
 			top:"{{ y_axis_label_top }}",
 			bottom:"{{ y_axis_label_bottom }}",
@@ -68,7 +71,8 @@
 			mobile:"{{ x_mobile_label }}"
 		},
 		yAxisColumn: "{{ y_axis_column }}",
-		xAxisColumn: "{{ x_axis_column }}"
+		xAxisColumn: "{{ x_axis_column }}",
+		indexOfProfileToShowFirst:1
 	});
 })(document);    
 </script>
