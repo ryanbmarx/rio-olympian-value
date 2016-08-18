@@ -90,7 +90,7 @@ $axis_label_width:100px;
 
 
 // HIDE THESE THINGS ON DESKTOP
-.instructions, .chart--large{
+.instructions, .chart-wrapper-large{
 	display:none;
 }
 
@@ -112,15 +112,32 @@ $axis_label_width:100px;
 	padding-bottom:30px;
 
 	&__pic{
-		width:100%;
+	    width: 100%;
+	    padding: 0;
+	    margin: 0 0 7px 0;
+		img{
+			width:100%;
+			margin: 0 0 7px 0;
+		}
+
+		figcaption{
+			@include sans-serif-text(12px);
+			color:#aaa;
+			text-align:right;
+		}
 	}
 	
 	&__name{
 		@include sans-serif-text(18px);
-		font-style:italic;
 		margin-top:0px;
+		margin-bottom:5px;
 	}
 
+	&__sport{
+		@include sans-serif-text(14px);
+		font-style:italic;
+		margin-top:0;
+	}
 	&__graf{
 		margin:0 0 0 ($mobile_chart_width + 20px);
 		p{
@@ -263,10 +280,12 @@ $axis_label_width:100px;
 
 	.profiles{
 		float:left;
+		margin-top:20px;
 	}
 
-	.chart--large{
+	.chart-wrapper-large{
 		display:block;
+		margin-top:40px;
 	}
 
 	.profile{

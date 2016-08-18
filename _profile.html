@@ -1,12 +1,17 @@
 <div id="{{ profile.id }}" class="profile">
-	<img src='http://{{ ROOT_URL }}/img/display/{{ profile.img }}' class="profile__pic">
+	<figure class="profile__pic">
+		<img src='http://{{ ROOT_URL }}/img/display/{{ profile.img }}' >
+		<figcaption>{{ profile.img_credit }}</figcaption>
+	</figure>
 	<h3 class='profile__name'>{{ profile.athlete_first }} {{ profile.athlete_last }}</h3>
 	<p class='profile__sport'>{{ profile.sport }}</p>
 	<div class="profile__chart"></div>
 	<div class="profile__graf">
 		<ul class='profile_meta'>
-			<li>Rio performance: {{ profile.rio_performance }}</li>
-			<li>Earnings potential: {{ profile.earning_potential }}</li>
+			<li>Age: {{ profile.age }}</li>
+			<li>Country: {{ profile.country }}</li>
+			<li>Earnings potential rating (0-10): {{ profile.earning_potential }}</li>
+			<li>Rio performance rating (0-10): {{ profile.rio_performance }}</li>
 		</ul>
 		{{ profile.blurb|markdown }}
 	</div>
