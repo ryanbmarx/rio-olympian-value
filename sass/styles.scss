@@ -14,16 +14,16 @@ $pointer_mobile_dimension:10px;
 $profile_plot_highlight_color: $trib_red1;
 
 // What color are the rest of the circles on mobile charts?
-$burger_plot_color: #ccc;
+$profile_plot_color: #ccc;
 
 // Axis label config
 $axis_label_height:20px;
 $axis_label_width:100px;
 // MIXINS
 
-@mixin size_profile_plot($size, $addHover:true){
+@mixin size_profile_plot($size, $addHover:true, $hover_multiplier:1.5){
 	
-	$big_size: $size * 2;
+	$big_size: $size * $hover_multiplier;
 
 	height:$size;
 	width:$size;
@@ -34,20 +34,19 @@ $axis_label_width:100px;
 	
 	@if $addHover{
 
-	&:hover, &.active{
-		height:$big_size;
-		width:$big_size;
-		margin-left: $big_size / 2 * -1;
-		margin-top: $big_size / 2 * -1;
+		&:hover, &.active{
+			height:$big_size;
+			width:$big_size;
+			margin-left: $big_size / 2 * -1;
+			margin-top: $big_size / 2 * -1;
 
-		border:2px dashed $profile_plot_highlight_color;
-		transition: all 150ms;
-		border-radius: 50%;
-		background-size: 80%;
+			// border:2px dashed $profile_plot_highlight_color;
+			transition: all 150ms;
+			background-size: 102%;
 
-		z-index:10;
+			z-index:10;
+		}
 	}
-}
 }
 
 @mixin resize_profiles_and_charts($profiles_width){
@@ -148,7 +147,7 @@ $axis_label_width:100px;
 		height:$mobile_chart_width;
 		.profile__plot{
 			@include size_profile_plot($pointer_mobile_dimension, false);
-			background-color:$burger_plot_color;
+			background-color:$profile_plot_color;
 			border-radius:50%;
 			cursor:default;
 		}
@@ -165,17 +164,6 @@ $axis_label_width:100px;
 	}
 }
 
-// This is a dot on the scatter which uses a background image
-.profile__plot--with-img{
-	position:absolute;
-	top:0;
-	left:0;
-	background-size:95%;
-	background-position: center center;
-	background-repeat:no-repeat;
-	z-index:6;
-	cursor:pointer;
-}
 
 // This loop outputs the css selectors needed to make the proper profile dot highlighted in each profile.
 @for $i from 1 through 30{
@@ -272,15 +260,8 @@ $axis_label_width:100px;
 	.chart--large{
 		display:block;
 	}
-	.XXXX{
-		width: 100%;
-		height: 0;
-		padding-bottom: 100%;
-	}
 
-
-
-	.burger{
+	.profile{
 		display:none;
 		border-bottom:0;
 		margin-bottom:0;
@@ -302,7 +283,21 @@ $axis_label_width:100px;
 	}
 
 	.profile__plot{
-		@include size_profile_plot(40px);
+		@include size_profile_plot(20px);
+		position:absolute;
+		background: $profile_plot_color;
+		border-radius:50%;
+		cursor:pointer;
+		// This is a dot on the scatter which uses a background image
+		
+		&.profile__plot--with-img{
+			background-color:yellow;
+			@include size_profile_plot(55px);
+			background-size:100%;
+			background-position: center center;
+			background-repeat:no-repeat;
+			// z-index:6;
+		}
 	}
 }
 
@@ -312,7 +307,7 @@ $axis_label_width:100px;
 	@include resize_profiles_and_charts(320px);
 
 	.profile__plot{
-		@include size_profile_plot(50px)
+		@include size_profile_plot(20px)
 	}
 }
 

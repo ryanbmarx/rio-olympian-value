@@ -26,6 +26,13 @@ var debounce = require('lodash/debounce');
 
 */
 
+	function isThereAPlotImage(d){
+			// Takes a data element. Tests if it is defined. 
+			// If it is, then return true. 
+			// Otherwise return false.
+			console.log(typeof(d) == 'undefined');
+			 return typeof(d) !== 'undefined';
+	}
 
 class TribScatterplot{
 	constructor(options){
@@ -158,11 +165,11 @@ class TribScatterplot{
 				.classed('profile__plot', true)
 				.style('left', d => `${x(d.xAxis)}%`)
 				.style('top', d => `${y(d.yAxis)}%`)
-				.attr('data-profile', d => {
-					return d.id;
-				})
+				.attr('data-profile', d => d.id)
 				.attr('data-tooltip', d => d.name)
-				.style('background-image', d => `url(${d.imgPlot})`)
+				.classed('profile__plot', true)
+				.classed('profile__plot--with-img', d => isThereAPlotImage(d.imgPlot))
+				.style('background-image', d => `url('${d.imgPlot}')`)
 				.on('click', function(){
 					var profileToShow = d3.select(this).attr('data-profile');
 					hideShowProfileByIndex(profileToShow, profileToShow);
