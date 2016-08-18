@@ -18,7 +18,7 @@ $profile_plot_color: #ccc;
 
 // Axis label config
 $axis_label_height:20px;
-$axis_label_width:100px;
+$axis_label_width:200px;
 // MIXINS
 
 @mixin size_profile_plot($size, $addHover:true, $hover_multiplier:1.5){
