@@ -19,6 +19,12 @@ $profile_plot_color: #ccc;
 // Axis label config
 $axis_label_height:20px;
 $axis_label_width:200px;
+
+$medal_height:15px;
+$gold_medal_color:#C1FF35;
+$silver_medal_color:#CCCCCC;
+$bronze_medal_color:#cd7f32;
+
 // MIXINS
 
 @mixin size_profile_plot($size, $addHover:true, $hover_multiplier:1.5){
@@ -328,7 +334,31 @@ $axis_label_width:200px;
 	}
 }
 
+// .medals{
+// 	display:flex;
+// 	width:100%;
+// 	justify-content:flex-start;
+// 	flex-wrap:wrap;
+// 	align-items:center;
+// }
 
+.medal{
+	display:inline-block;
+	height:$medal_height;
+	width:$medal_height;
+	border-radius:50%;
+	margin:0 3px -2px 0;
+
+	&--gold{
+		background:$gold_medal_color;
+	}
+	&--silver{
+		background:$silver_medal_color;
+	}
+	&--bronze{
+		background:$bronze_medal_color;
+	}
+}
 
 @media (min-width:900px){
 	@include resize_profiles_and_charts(320px);

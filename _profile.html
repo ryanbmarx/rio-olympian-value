@@ -10,7 +10,14 @@
 		<ul class='profile_meta'>
 			<li>Age: {{ profile.age }}</li>
 			<li>Country: {{ profile.country }}</li>
-			<li>Medals: {{ profile.results }}</li>
+			<li>
+				Medals:
+					{% for medal in ['gold', 'silver', 'bronze']%}
+						{% for number in range(0,profile[medal]) %}
+							<span class='medal medal--{{ medal }}'></span>
+						{% endfor %}
+					{% endfor %}
+			</li>
 		</ul>
 		{{ profile.blurb|markdown }}
 	</div>
